@@ -1,0 +1,5 @@
+# Generated Python state and private migration data never belong in commits.
+__pycache__/
+*.py[cod]
+*.zip
+*.jsonl
