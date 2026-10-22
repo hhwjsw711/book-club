@@ -106,3 +106,39 @@ Backend: 105 tests pass; migration tooling: 14 tests pass. Root typechecks,
 ESLint, web build and complete mobile preflight (including an isolated EAS-like
 export) pass. Browser checks passed without page errors or mobile overflow.
 Private evidence is in `.context/live-auth-cutover/`.
+
+## Live release — completed October 21, 2026
+
+The cutover is deployed on **secret-barracuda-975**. The website and iOS
+production OTA both ship commit `9f738ba814e9861efe2e45ece1095a35528609f6`.
+
+- Web: https://secret-barracuda-975.convex.site
+- Web release tag: `web-dev/20261021-234649` (pushed).
+- Mobile release tag: `mobile-ota/20261021-234724` (pushed).
+- iOS runtime: `1.0.0`; EAS branch/environment: `production`.
+- [EAS update group](https://expo.dev/accounts/ianatconvex/projects/push-up-club/updates/15f35ed7-04bc-4364-be1b-1c9ea1014705).
+
+The final live export matches all **9,455 application documents across 19
+tables**, six users, six memberships, five complete password records, five
+username records and five canonical account records. All **21 push component
+tables** also match the pre-cutover snapshot. Hosting assets changed through
+normal publication. Legacy `core` is unmounted; only beta `auth` serves login.
+No synthetic accounts or other test data were created on the live deployment.
+
+Live checks passed for both refresh response formats, unauthenticated profile
+and club denial, unchanged JWT configuration, JWKS availability, hosted beta
+login's unknown-user error, browser exceptions and mobile overflow. Actual
+password login was tested using an alpha-created canary on the isolated
+snapshot deployment; no real member passwords were requested or guessed.
+
+Members should reopen the app, apply **New version ready → Restart** when
+shown, and sign in with their existing username/password if prompted. No
+password reset, reinstallation or new TestFlight binary is required. Older
+phone bundles can sign in even before receiving the OTA. Face ID/Touch ID
+remains a separate trial, not part of this live release.
+
+Private recovery artifacts: `preflight-backup.zip` and `staged-backup.zip`
+include file storage; `final-live-export.zip`, `live-account-verification.json`,
+`final-live-comparison.json`, `live-smoke.json` and `live-browser.json` record
+verification. All are under `.context/live-auth-cutover/`, outside version
+control. The temporary final rehearsal backend expires after seven days.
