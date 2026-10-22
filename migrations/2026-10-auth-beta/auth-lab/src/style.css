@@ -1,0 +1,175 @@
+:root {
+  color-scheme: light;
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  color: #2b2620;
+  background: #faf7f0;
+  line-height: 1.6;
+  scrollbar-color: #968a80 #faf7f0;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+main {
+  max-width: 600px;
+  padding: 36px 24px;
+  margin: 0 auto;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: baseline;
+  padding-bottom: 40px;
+}
+header a {
+  color: inherit;
+  font-weight: 700;
+  text-decoration: none;
+}
+header span,
+.note,
+footer {
+  color: #6b6259;
+  font-size: 0.875rem;
+}
+h1 {
+  font-family: Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(2.2rem, 6vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin: 0 0 24px;
+  text-wrap: balance;
+}
+h2 {
+  font-size: 1.25rem;
+  line-height: 1.3;
+  margin: 0 0 12px;
+}
+p {
+  margin: 0 0 20px;
+}
+.intro {
+  margin-bottom: 32px;
+}
+nav {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid #ddd6cc;
+  padding-bottom: 16px;
+  margin-bottom: 28px;
+}
+nav button {
+  width: auto;
+  min-width: 110px;
+  transition: none;
+}
+form {
+  display: grid;
+  gap: 16px;
+}
+form p {
+  margin: 0;
+}
+label {
+  display: grid;
+  gap: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+input {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid #968a80;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font: inherit;
+  font-size: 1rem;
+  color: inherit;
+  background: white;
+  caret-color: #5d4494;
+}
+button,
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 18px;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  background: #5d4494;
+  color: white;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 150ms ease-out;
+}
+button:hover,
+.button:hover {
+  background: #493474;
+}
+button:disabled,
+input:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+.quiet {
+  color: #5d4494;
+  background: transparent;
+}
+.quiet:hover {
+  background: #eee7f6;
+}
+a {
+  color: #5d4494;
+  text-underline-offset: 4px;
+}
+:focus-visible {
+  outline: 2px solid #5d4494;
+  outline-offset: 4px;
+}
+::selection {
+  background: #e6ddf5;
+}
+.error {
+  color: #9b2525;
+}
+code {
+  display: block;
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+  padding: 12px 0 24px;
+}
+.signed-in > button,
+.signed-in > a {
+  width: 100%;
+  margin-bottom: 12px;
+}
+details {
+  border-top: 1px solid #ddd6cc;
+  margin-top: 24px;
+  padding-top: 16px;
+}
+summary {
+  cursor: pointer;
+  min-height: 44px;
+}
+footer {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #ddd6cc;
+}
+footer p {
+  margin-top: 12px;
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}

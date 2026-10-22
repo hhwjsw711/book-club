@@ -44,7 +44,7 @@ npm run deploy:dev
 ```
 
 This pushes the backend (`convex dev --once`) and then builds + uploads the
-frontend to the **dev** deployment (`static-hosting upload --build`). The
+frontend to the **dev** deployment (`static-hosting upload --dev --build`). The
 `--build` step runs `npm run build`, which typechecks first, so a broken build
 will not ship.
 
@@ -290,41 +290,25 @@ username that already resolves (`USERNAME_TAKEN`) before the callback runs.
 That guard didn't exist when a second sign-up forked the duplicate "Peter" on
 2026-07-29.
 
-**Auth v2 keys password accounts by the app user id**, not by the normalized
-username v1 used, and no migration ships with the package. Sign-in resolves
-username → userId, verifies the password (also keyed by userId), then demands
-an `accounts` row with `providerAccountId == userId`; without one it throws
-`Cannot sign in: no account for provider = "password"...`. Four of five members
-were in that state from the 2026-08-22 bump until 2026-09-12, silently — an
-existing session keeps working, so it only bites when someone next signs in.
-Repaired by appending the missing rows; `--append` matters, since
-`sessions.accountId` still points at the old rows and replacing them signs
-everyone out:
+**Auth beta uses the default `auth` component**, at `/auth`, with canonical
+password accounts keyed by the app user ID. Usernames and password hashes
+remain in `authUsername` and `authPasswordProvider`. Never mount beta over a
+populated alpha `core/sessions` table. Migration scripts, historical trials,
+validation and rollback belong in `migrations/2026-10-auth-beta/`, not normal
+application scripts. Private exports and execution evidence stay in `.context/`.
 
-```sh
-# one line per affected user; provider/providerAccountId/userId is the whole row
-echo '{"provider":"password","providerAccountId":"<usersId>","userId":"<usersId>"}' \
-  > rows.jsonl
-npx convex import --component core --table accounts --append rows.jsonl
-```
+**Token lifetimes are set in `convex/lib/auth.ts`**: access tokens last one
+hour; the 30-day session window slides on activity. Beta retries a lost refresh
+response until its successor is redeemed, subject to its outstanding-token
+limit. Alpha refresh sessions are retired by the hard cutover. `api.auth`
+preserves older phone contracts; `api.authBeta` serves updated clients. Both
+use the same beta backend, existing signing keys and issuer. Members sign in
+again with their existing credentials; old access JWTs expire naturally.
 
-The same mechanism rewires a forked identity onto an old `users` row — repoint
-`core/accounts` (`userId` *and* `providerAccountId`), `authUsername/usernames`
-(`userId`) and `authPasswordProvider/passwords` (`userId`) at the old id, then
-delete the new `users` row. The password survives, because it travels with the
-userId it's keyed by. That's the Tucker path.
-
-**Token lifetimes are set in `convex/auth.ts`**, not left at the defaults. The
-access-token TTL drives how often clients rotate their refresh token, and every
-rotation the client fails to persist is a silent, permanent sign-out (the
-replaced token is honoured for only 30s). At the 60s default that was a
-rotation a minute per device; it's now an hour. Sessions themselves last 30
-days on a *sliding* window, so inactivity is never what signs someone out.
-
-Deleting a `users` row does **not** delete the auth account pointing at it:
-component data is only reachable through the component's API and it exposes no
-delete, so clear stale accounts in the dashboard under the `core` component's
-`accounts` table.
+Deleting a `users` row does **not** delete its auth account. Identity repair
+must keep `auth/accounts`, `authUsername/usernames` and
+`authPasswordProvider/passwords` consistent and account for active sessions.
+Do not apply historical `core`-only repair instructions to beta accounts.
 
 Member-scoped queries need an identity (subject = users table id):
 
