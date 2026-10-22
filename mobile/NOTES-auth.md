@@ -1,15 +1,28 @@
-# Mobile auth wiring — how it works (done)
+# Mobile auth wiring
 
-Auth is live: Convex Auth v2 (`@convex-dev/auth@d236554`, same pinned
-pkg.pr.new build as the web app) with username + password against the shared
-dev deployment (`expo.extra.convexUrl` in app.json).
+Web, mobile and backend pin Convex Auth v2 `2.0.0-beta.0`. Username + password
+uses the existing live dev deployment (`expo.extra.convexUrl` in app.json).
+See the [migration runbook](../migrations/2026-10-auth-beta/README.md).
+
+`api.auth` preserves the alpha mutation names, function kinds and response
+envelopes for installed phone bundles. Updated providers and password hooks
+use `api.authBeta`. Both issue beta sessions for the original app user ID.
+Old alpha refresh tokens are rejected after cutover; members sign in once
+with their existing username and password. Already-issued access tokens remain
+valid until expiry (at most one hour). Keep the deployment URL, SecureStore
+adapter, signing keys and `/auth` JWKS URL unchanged.
+
+Deploy the backend before the web client and mobile OTA. This password-only
+upgrade needs no native capability change. Passkeys remain a separate web
+experiment; iOS enrollment needs native integration, an associated domain,
+and a new binary.
 
 ## The pieces
 
 - **Providers** (`App.tsx`): `ConvexAuthProvider` wraps the app with
   `storage` set to an `expo-secure-store` adapter (`src/convex.ts`) — tokens
   live in the device keychain. `AuthLoading` / `Unauthenticated` /
-  `Authenticated` gate the tree.
+  `Authenticated` (from `convex/react`) gate the tree.
 - **Screens**: `src/screens/AuthScreen.tsx` (log in / create account, full
   structured-`userError` handling mirroring the web) and
   `src/screens/JoinClubScreen.tsx` (invite-code redemption for a signed-in
@@ -44,8 +57,9 @@ was locked out of the login screen until an `ota:production` went out.
 
 When the auth package moves, compare **function kinds**, not just arg/return
 validators, for all four exports (`signInWithPassword`, `signUpWithPassword`,
-`refreshSession`, `signOut`) — and publish the OTA in the same sitting as the
-backend push.
+`refreshSession`, `signOut`). The beta bridge deliberately preserves those
+mutation contracts, so older phones keep working while the OTA rolls out.
+Do not remove that bridge just because the new OTA has been published.
 
 ## Token persistence across app restarts
 

@@ -1,7 +1,7 @@
 import {
-  useSignInWithPassword,
-  useSignUpWithPassword,
-} from "@convex-dev/auth/providers/password/react";
+  useSignInWithUsernamePassword,
+  useSignUpWithUsernamePassword,
+} from "@convex-dev/auth/methods/username-password/react";
 import { useState } from "react";
 import { api } from "../convex/_generated/api";
 import { Button, Card, ErrorNote, Field, inputClass } from "./ui";
@@ -45,9 +45,7 @@ export function AuthScreen() {
 }
 
 function LogInForm() {
-  const { signIn, pending } = useSignInWithPassword(
-    api.auth.signInWithPassword,
-  );
+  const { signIn, pending } = useSignInWithUsernamePassword(api.authBeta);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -59,7 +57,7 @@ function LogInForm() {
         e.preventDefault();
         setError(null);
         const result = await signIn({ username, password });
-        if (result.success) return;
+        if (result.status === "complete") return;
         setError(() => {
           switch (result.userError.error) {
             case "USER_NOT_FOUND":
@@ -115,9 +113,7 @@ function LogInForm() {
 }
 
 function SignUpForm() {
-  const { signUp, pending } = useSignUpWithPassword(
-    api.auth.signUpWithPassword,
-  );
+  const { signUp, pending } = useSignUpWithUsernamePassword(api.authBeta);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -129,7 +125,7 @@ function SignUpForm() {
         e.preventDefault();
         setError(null);
         const result = await signUp({ username, password });
-        if (result.success) return;
+        if (result.status === "complete") return;
         setError(() => {
           switch (result.userError.error) {
             case "USERNAME_TAKEN":

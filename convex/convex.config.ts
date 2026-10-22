@@ -1,8 +1,8 @@
 import { defineApp } from "convex/server";
 import { v } from "convex/values";
-import core from "@convex-dev/auth/core/convex.config.js";
-import passwordProvider from "@convex-dev/auth/providers/password/convex.config.js";
-import username from "@convex-dev/auth/username/convex.config.js";
+import core from "@convex-dev/auth/convex.config.js";
+import passwordProvider from "@convex-dev/auth/components/password/convex.config.js";
+import username from "@convex-dev/auth/components/username/convex.config.js";
 import pushNotifications from "@convex-dev/expo-push-notifications/convex.config.js";
 import staticHosting from "@convex-dev/static-hosting/convex.config.js";
 
@@ -19,15 +19,16 @@ const app = defineApp({
 
 app.use(staticHosting, { httpPrefix: "/" });
 
+// Beta uses its default component name, `auth`, at the existing JWKS URL.
 app.use(core, {
   httpPrefix: "/auth",
   env: {
     AUTH_PRIVATE_KEY: app.env.AUTH_PRIVATE_KEY,
     AUTH_JWKS: app.env.AUTH_JWKS,
   },
-  name: "core",
 });
-app.use(passwordProvider);
+// These schemas are unchanged; explicit names preserve credentials and usernames.
+app.use(passwordProvider, { name: "authPasswordProvider" });
 // Usernames live in their own component rather than in the core `accounts`
 // table, so a username identifies a *user* and not one provider's account.
 app.use(username);

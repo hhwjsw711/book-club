@@ -16,8 +16,8 @@ createRoot(document.getElementById("root")!).render(
     <ConvexAuthProvider
       client={convex}
       api={{
-        refreshSession: api.auth.refreshSession,
-        signOut: api.auth.signOut,
+        refreshSession: api.authBeta.refreshSession,
+        signOut: api.authBeta.signOut,
       }}
     >
       <App />

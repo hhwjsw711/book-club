@@ -1,7 +1,7 @@
 import {
-  useSignInWithPassword,
-  useSignUpWithPassword,
-} from "@convex-dev/auth/providers/password/react";
+  useSignInWithUsernamePassword,
+  useSignUpWithUsernamePassword,
+} from "@convex-dev/auth/methods/username-password/react";
 import { useState } from "react";
 import {
   KeyboardAvoidingView,
@@ -46,9 +46,7 @@ export function AuthScreen() {
 }
 
 function LogInForm() {
-  const { signIn, pending } = useSignInWithPassword(
-    api.auth.signInWithPassword,
-  );
+  const { signIn, pending } = useSignInWithUsernamePassword(api.authBeta);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -56,7 +54,7 @@ function LogInForm() {
   const submit = async () => {
     setError(null);
     const result = await signIn({ username: username.trim(), password });
-    if (result.success) {
+    if (result.status === "complete") {
       return;
     }
     setError(() => {
@@ -99,9 +97,7 @@ function LogInForm() {
 }
 
 function SignUpForm() {
-  const { signUp, pending } = useSignUpWithPassword(
-    api.auth.signUpWithPassword,
-  );
+  const { signUp, pending } = useSignUpWithUsernamePassword(api.authBeta);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -109,7 +105,7 @@ function SignUpForm() {
   const submit = async () => {
     setError(null);
     const result = await signUp({ username: username.trim(), password });
-    if (result.success) {
+    if (result.status === "complete") {
       return;
     }
     setError(() => {

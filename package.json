@@ -18,7 +18,7 @@
     "releases": "git tag -n99 --sort=-creatordate | head -60"
   },
   "dependencies": {
-    "@convex-dev/auth": "^2.0.0-alpha.1",
+    "@convex-dev/auth": "2.0.0-beta.0",
     "@convex-dev/expo-push-notifications": "^0.4.2",
     "@convex-dev/static-hosting": "^0.2.0",
     "convex": "^1.46.0",
@@ -34,12 +34,14 @@
     "@types/react-dom": "^19.2.0",
     "@typescript-eslint/parser": "^8.65.0",
     "@vitejs/plugin-react": "^6.0.0",
-    "convex-test": "^0.0.56",
+    "convex-test": "0.0.59",
     "eslint": "^9.39.5",
+    "jose": "5.10.0",
     "npm-run-all2": "^8.0.0",
     "tailwindcss": "^4.3.0",
     "typescript": "^5.9.0",
     "vite": "^8.1.0",
-    "vitest": "^4.1.11"
+    "vitest": "^4.1.11",
+    "@convex-dev/auth-legacy": "npm:@convex-dev/auth@2.0.0-alpha.1"
   }
 }

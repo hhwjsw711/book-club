@@ -1,10 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
-import {
-  Authenticated,
-  AuthLoading,
-  ConvexAuthProvider,
-  Unauthenticated,
-} from "@convex-dev/auth/react";
+import { Authenticated, AuthLoading, Unauthenticated } from "convex/react";
+import { ConvexAuthProvider } from "@convex-dev/auth/react";
 import { useMutation, useQuery } from "convex/react";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
@@ -33,8 +29,8 @@ export default function App() {
       <ConvexAuthProvider
         client={convex}
         api={{
-          refreshSession: api.auth.refreshSession,
-          signOut: api.auth.signOut,
+          refreshSession: api.authBeta.refreshSession,
+          signOut: api.authBeta.signOut,
         }}
         storage={secureStorage}
       >

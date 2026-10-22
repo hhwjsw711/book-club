@@ -9,12 +9,16 @@
  */
 
 import type * as auth from "../auth.js";
+import type * as authBeta from "../authBeta.js";
+import type * as authCallbacks from "../authCallbacks.js";
 import type * as books from "../books.js";
 import type * as clubs from "../clubs.js";
 import type * as crons from "../crons.js";
 import type * as feed from "../feed.js";
 import type * as feedback from "../feedback.js";
 import type * as lib_access from "../lib/access.js";
+import type * as lib_auth from "../lib/auth.js";
+import type * as lib_authContracts from "../lib/authContracts.js";
 import type * as lib_clouds from "../lib/clouds.js";
 import type * as lib_days from "../lib/days.js";
 import type * as lib_offgrid from "../lib/offgrid.js";
@@ -39,12 +43,16 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
+  authBeta: typeof authBeta;
+  authCallbacks: typeof authCallbacks;
   books: typeof books;
   clubs: typeof clubs;
   crons: typeof crons;
   feed: typeof feed;
   feedback: typeof feedback;
   "lib/access": typeof lib_access;
+  "lib/auth": typeof lib_auth;
+  "lib/authContracts": typeof lib_authContracts;
   "lib/clouds": typeof lib_clouds;
   "lib/days": typeof lib_days;
   "lib/offgrid": typeof lib_offgrid;
@@ -90,8 +98,8 @@ export declare const internal: FilterApi<
 
 export declare const components: {
   staticHosting: import("@convex-dev/static-hosting/_generated/component.js").ComponentApi<"staticHosting">;
-  core: import("@convex-dev/auth/core/_generated/component.js").ComponentApi<"core">;
-  authPasswordProvider: import("@convex-dev/auth/providers/password/_generated/component.js").ComponentApi<"authPasswordProvider">;
-  authUsername: import("@convex-dev/auth/username/_generated/component.js").ComponentApi<"authUsername">;
+  auth: import("@convex-dev/auth/_generated/component.js").ComponentApi<"auth">;
+  authPasswordProvider: import("@convex-dev/auth/components/password/_generated/component.js").ComponentApi<"authPasswordProvider">;
+  authUsername: import("@convex-dev/auth/components/username/_generated/component.js").ComponentApi<"authUsername">;
   pushNotifications: import("@convex-dev/expo-push-notifications/_generated/component.js").ComponentApi<"pushNotifications">;
 };

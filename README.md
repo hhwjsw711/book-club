@@ -60,11 +60,16 @@ npx @convex-dev/auth  # one-time: generates AUTH_PRIVATE_KEY / AUTH_JWKS
 npm run dev           # vite + convex dev, in parallel
 ```
 
-Auth is username + password via Convex Auth v2 (`@convex-dev/auth`
-`^2.0.0-alpha.1` from npm — still alpha, and the caret means a fresh install
-can move it). The auth components (`core`, `authPasswordProvider`,
-`authUsername`) are mounted in `convex/convex.config.ts`; token lifetimes are
-set in `convex/auth.ts`.
+Auth is username + password via Convex Auth v2, pinned to
+`@convex-dev/auth@2.0.0-beta.0`. The backend uses the package's default `auth`
+component at `/auth`, sharing the existing `authPasswordProvider` and
+`authUsername` stores. Older phone bundles use the compatible `api.auth`
+mutations; updated web and mobile clients use `api.authBeta`.
+
+The hard cutover preserves usernames, passwords, app user IDs and club history.
+Old refresh sessions are retired, so members sign in again with their existing
+credentials. See the [migration runbook](migrations/2026-10-auth-beta/README.md)
+for validation, rollback and the separate passkey experiment.
 
 ## How it hangs together
 

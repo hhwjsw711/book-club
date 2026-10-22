@@ -1,8 +1,4 @@
-import {
-  Authenticated,
-  AuthLoading,
-  Unauthenticated,
-} from "@convex-dev/auth/react";
+import { Authenticated, AuthLoading, Unauthenticated } from "convex/react";
 import { useMutation, useQuery } from "convex/react";
 import { useEffect, useState } from "react";
 import { api } from "../convex/_generated/api";

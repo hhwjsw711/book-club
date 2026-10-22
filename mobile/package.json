@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "index.ts",
   "dependencies": {
-    "@convex-dev/auth": "^2.0.0-alpha.1",
+    "@convex-dev/auth": "2.0.0-beta.0",
     "@expo/vector-icons": "^15.0.2",
-    "convex": "^1.42.3",
+    "convex": "1.46.0",
     "expo": "~57.0.8",
     "expo-constants": "~57.0.7",
     "expo-device": "~57.0.1",
