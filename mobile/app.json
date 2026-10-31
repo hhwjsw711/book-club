@@ -41,15 +41,15 @@
     "extra": {
       "convexUrl": "https://coordinated-labrador-130.ca-central-1.convex.cloud",
       "eas": {
-        "projectId": "c6fb0140-1e57-48f1-841b-417c01e3cecf"
+        "projectId": "c3bf2f55-1f00-4346-a1d3-46757dd3facf"
       }
     },
-    "owner": "ianatconvex",
+    "owner": "huhongwei",
     "runtimeVersion": {
       "policy": "appVersion"
     },
     "updates": {
-      "url": "https://u.expo.dev/c6fb0140-1e57-48f1-841b-417c01e3cecf"
+      "url": "https://u.expo.dev/c3bf2f55-1f00-4346-a1d3-46757dd3facf"
     }
   }
 }
