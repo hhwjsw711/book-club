@@ -25,3 +25,6 @@ dist-ssr
 
 # Private iMessage exports & DB copies
 tmp/
+
+# Local agent scratch (deploy tooling like .temp/set-auth-envs.mjs)
+.temp/
