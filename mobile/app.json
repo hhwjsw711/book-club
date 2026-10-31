@@ -8,7 +8,9 @@
     "userInterfaceStyle": "light",
     "scheme": "pushupclub",
     "backgroundColor": "#F4EFE5",
-    "platforms": ["ios"],
+    "platforms": [
+      "ios"
+    ],
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.pushupclub.app",
@@ -33,10 +35,11 @@
           "color": "#8A3B2A"
         }
       ],
-      "expo-secure-store"
+      "expo-secure-store",
+      "expo-status-bar"
     ],
     "extra": {
-      "convexUrl": "https://secret-barracuda-975.convex.cloud",
+      "convexUrl": "https://coordinated-labrador-130.ca-central-1.convex.cloud",
       "eas": {
         "projectId": "c6fb0140-1e57-48f1-841b-417c01e3cecf"
       }

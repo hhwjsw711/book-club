@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { TextInputInstance } from "react-native";
 import {
   FlatList,
   KeyboardAvoidingView,
@@ -331,7 +332,7 @@ function ReplyBar(props: { target: ReplyTarget; onDismiss: () => void }) {
   const { postReply } = useActions();
   const [body, setBody] = useState("");
   const [sending, setSending] = useState(false);
-  const input = useRef<TextInput>(null);
+  const input = useRef<TextInputInstance>(null);
 
   // Also refocus when the reader aims at a different thread without the bar
   // ever unmounting.
